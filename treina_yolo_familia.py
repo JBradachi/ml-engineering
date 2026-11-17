@@ -9,7 +9,7 @@ import torch
 # basta treinar o yolo para identificar as famílias (264 classes)
 
 # esse é o modelo com segmentação
-model = YOLO('yolo26s-cls.pt')
+model = YOLO('yolo26n-cls.pt')
 
 # Executa o fine-tuning no dataset personalizado
 results = model.train(
@@ -21,5 +21,6 @@ results = model.train(
     device=0,
     amp=True,
     cache=False,
+    name='familia_nano'
 )
-print(results) # 6 horas de treinamento
+print(results) 
