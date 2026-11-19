@@ -42,4 +42,4 @@ def treina_modelos(path, yolo_model, name):
         gc.collect()
         print(f"Memória liberada após o treino de {ordem}\n")
 
-treina_modelos("/home/bradas/Downloads/insetos/familia/familia_yolo_hierarquico", 'yolo26m-cls.pt', "medium")
+treina_modelos("/home/bradas/Downloads/insetos/familia/familia_yolo_hierarquico", 'yolo26n-cls.pt', "nano")
