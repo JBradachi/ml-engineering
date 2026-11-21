@@ -304,7 +304,7 @@ class YOLOPredictionExtractor:
         chunk_size: int = 512,
         imgsz: int | None = None,
         device: str | int | None = None,
-        half: bool = False,
+        quantize: int | str | None = None,
         use_memmap: bool = False,
         memmap_dir: str | Path | None = None,
     ) -> tuple[NDArray[np.int64], NDArray[np.float32]]:
@@ -347,12 +347,14 @@ class YOLOPredictionExtractor:
             "verbose": False,
             "save": False,
             "plots": False,
-            "half": half,
+            
         }
         if imgsz is not None:
             base_predict_kwargs["imgsz"] = imgsz
         if device is not None:
             base_predict_kwargs["device"] = device
+        if quantize is not None:
+            base_predict_kwargs["quantize"] = quantize
 
         for start in range(0, num_samples, chunk_size):
             end = min(start + chunk_size, num_samples)
@@ -729,7 +731,7 @@ def evaluate_yolo_classifier(
     chunk_size: int = 512,
     imgsz: int | None = None,
     device: str | int | None = None,
-    half: bool = False,
+    quantize: int | str | None = None,
     confidence_threshold: float = 0.0,
     strict_nan: bool = True,
     use_memmap: bool = False,
@@ -745,7 +747,7 @@ def evaluate_yolo_classifier(
         chunk_size=chunk_size,
         imgsz=imgsz,
         device=device,
-        half=half,
+        quantize=quantize,
         use_memmap=use_memmap,
         memmap_dir=memmap_dir,
     )
@@ -829,7 +831,7 @@ if __name__ == "__main__":
         data_source=mock_manifest,
         batch_size=16,
         chunk_size=256,
-        half=True,
+        quantize=16,
         use_memmap=True,
     )
     assert mock_model.calls_count == 8, "Deveria ter dividido 2000 amostras em 8 chunks de 256!"
